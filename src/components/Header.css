@@ -1,6 +1,7 @@
 .header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--c-bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--c-line); }
 .header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
-.header__logo { font: 800 1.4rem var(--f-display); letter-spacing: -0.03em; text-decoration: none; }
+.header__logo { display: inline-flex; align-items: center; gap: 0.6rem; font: 800 1.4rem var(--f-display); letter-spacing: -0.03em; text-decoration: none; }
+.header__logo svg { flex: none; }
 .header__nav { display: flex; gap: 2rem; }
 .header__nav a { text-decoration: none; font-weight: 500; padding-block: 0.3rem; border-bottom: 2px solid transparent; }
 .header__nav a:hover { border-color: var(--c-accent); }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { nav, site as siteDefaults } from "../data/site";
 import { useContent } from "../hooks/useContent";
+import Logo from "./Logo";
 import "./Header.css";
 
 export default function Header() {
@@ -10,7 +11,10 @@ export default function Header() {
   return (
     <header className="header">
       <div className="container header__inner">
-        <Link to="/" className="header__logo" onClick={() => setOpen(false)}>{site.name}</Link>
+        <Link to="/" className="header__logo" onClick={() => setOpen(false)}>
+          <Logo size={32} />
+          {site.name}
+        </Link>
         <button className="header__toggle" aria-expanded={open} aria-controls="main-nav" onClick={() => setOpen(!open)}>
           {open ? "Close" : "Menu"}
         </button>

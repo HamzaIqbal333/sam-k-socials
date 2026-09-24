@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { nav, site as siteDefaults } from "../data/site";
 import { useContent } from "../hooks/useContent";
+import Logo from "./Logo";
 import "./Footer.css";
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div>
-          <p className="footer__brand">{site.name}</p>
+          <p className="footer__brand"><Logo size={30} />{site.name}</p>
           <p className="footer__tag">Social media, content and ads that bring in the right enquiries.</p>
         </div>
         <nav aria-label="Footer">
