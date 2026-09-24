@@ -11,8 +11,10 @@ export const site = {
   tallyFormId: "REPLACE_WITH_TALLY_FORM_ID", // TODO: from your Tally share link (tally.so/r/<id>), optional now
   availability: "Booking new partnerships for next month",
   heroImage: "https://images.unsplash.com/photo-1683170139203-d8a41d680358?w=1000&q=80&auto=format&fit=crop", // TODO: replace with Sam's own content
-  aboutImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&auto=format&fit=crop", // TODO: replace with Sam's own portrait
-  contactImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900&q=80&auto=format&fit=crop", // TODO: replace with Sam's own portrait
+  // Same photo on About and Contact on purpose — it's meant to be the same person, Sam, in both places.
+  // TODO: replace with two real photos of Sam once you have them (a portrait + a candid work shot read well as a pair).
+  aboutImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&auto=format&fit=crop",
+  contactImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&auto=format&fit=crop",
   socials: [
     { label: "Instagram", href: "https://instagram.com/" }, // TODO: real handles
     { label: "TikTok", href: "https://tiktok.com/" },
