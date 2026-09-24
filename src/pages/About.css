@@ -13,7 +13,7 @@
   content: ""; position: absolute; inset: 0; transform: translate(14px, 14px) rotate(2deg);
   background: var(--c-zest); border-radius: var(--r-lg); z-index: 0;
 }
-.about__photo .placeholder { position: relative; z-index: 1; border-radius: var(--r-lg); border: 2px solid var(--c-ink); }
+.about__photo .placeholder, .about__photo img { position: relative; z-index: 1; border-radius: var(--r-lg); border: 2px solid var(--c-ink); }
 @media (min-width: 860px) {
   .about__grid { grid-template-columns: 1.15fr 0.85fr; }
   .about__photo { justify-self: end; }

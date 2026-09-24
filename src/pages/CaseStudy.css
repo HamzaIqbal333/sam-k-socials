@@ -17,6 +17,9 @@
 .cs-head__meta dt { font-size: var(--fs-small); color: var(--c-ink-soft); }
 .cs-head__meta dd { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.5rem; }
 
+.cs-cover { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.cs-cover .placeholder, .cs-cover img { border-radius: var(--r-lg); border: 2px solid var(--c-ink); }
+
 /* Labelled parts: question on the left, answer on the right */
 .cs-parts { border-top: 2px solid var(--c-ink); }
 .part {

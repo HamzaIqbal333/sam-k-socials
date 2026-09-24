@@ -15,7 +15,7 @@
   content: ""; position: absolute; inset: 0; transform: translate(-14px, 14px) rotate(-2deg);
   background: var(--c-sky); border-radius: var(--r-lg); z-index: 0;
 }
-.contact__photo .placeholder { position: relative; z-index: 1; border-radius: var(--r-lg); border: 2px solid var(--c-ink); }
+.contact__photo .placeholder, .contact__photo img { position: relative; z-index: 1; border-radius: var(--r-lg); border: 2px solid var(--c-ink); }
 .contact__photo-caption { position: relative; z-index: 1; margin: 0.85rem 0 0; font-size: var(--fs-small); color: var(--c-ink-soft); text-align: center; }
 
 .contact__direct {

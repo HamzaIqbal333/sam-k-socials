@@ -7,7 +7,7 @@ const MAX_DID = 6;
 const MAX_RESULTS = 8;
 
 function emptyClient() {
-  return { slug: "", name: "", industry: "", did: [""], need: "", approach: "", show: "", results: [""] };
+  return { slug: "", name: "", industry: "", did: [""], need: "", approach: "", show: "", results: [""], coverImage: "" };
 }
 
 export default function AdminPortfolio() {
@@ -85,6 +85,7 @@ export default function AdminPortfolio() {
         need: c.need.trim(),
         approach: c.approach.trim(),
         show: c.show.trim(),
+        coverImage: c.coverImage?.trim() || null,
         results: c.results.map((r) => r.trim()).filter(Boolean),
       }));
       await saveContent("clients", { items: cleaned });
@@ -141,6 +142,17 @@ export default function AdminPortfolio() {
                 value={c.industry}
                 maxLength={80}
                 onChange={(e) => updateClient(i, { industry: e.target.value })}
+              />
+            </label>
+
+            <label>
+              Cover image URL (portfolio card + case study banner)
+              <input
+                type="url"
+                value={c.coverImage || ""}
+                maxLength={500}
+                placeholder="https://..."
+                onChange={(e) => updateClient(i, { coverImage: e.target.value })}
               />
             </label>
 

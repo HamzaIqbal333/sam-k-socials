@@ -4,9 +4,11 @@ rules_version = '2';
 // Assumed Data Model — Sam K. Socials
 // ===============================================================
 //
-// content/site         { name, email, tallyFormId, availability, socials: [{label,href}] }  (<=8 socials)
+// content/site         { name, email, tallyFormId, availability, socials: [{label,href}],
+//                         heroImage?, aboutImage?, contactImage? }  (<=8 socials; image fields are
+//                         plain https URLs — admin-entered, e.g. Unsplash — not file uploads)
 // content/services      { items: [{ id, title, kind, short, body, points: [string] }] }   (<=8 items)
-// content/clients       { items: [{ slug, name, industry, did:[string], need, approach, show, results:[string] }] }  (<=6 items)
+// content/clients       { items: [{ slug, name, industry, did:[string], need, approach, show, results:[string], coverImage? }] }  (<=6 items)
 // content/testimonials  { items: [{ quote, name, business }] }  (<=8 items)
 // content/process       { items: [{ title, text }] }  (<=6 items)
 //   -> `content` docs are the website's own marketing copy (services, portfolio, testimonials,
@@ -48,6 +50,14 @@ function validOptionalStr(data, field, maxLen) {
     (data[field] is string && data[field].size() <= maxLen);
 }
 
+// Optional image URL field: must be http(s) if present, and capped well short of Firestore's
+// own 1MB document limit — this is a URL, not an uploaded file.
+function validOptionalImageUrl(data, field) {
+  return !(field in data) || data[field] == null ||
+    (data[field] is string && data[field].size() <= 500 &&
+      data[field].matches('^https?://.+'));
+}
+
 // Validates every slot of a list of plain strings, up to 8 items (callers additionally
 // cap list.size() <= maxItems before calling this, so unused trailing slots are unreachable).
 function validStrList(list, maxLen) {
@@ -69,11 +79,14 @@ function isValidSocial(s) {
     s.href is string && s.href.size() <= 300;
 }
 function isValidSite(d) {
-  return d.keys().hasOnly(['name', 'email', 'tallyFormId', 'availability', 'socials']) &&
+  return d.keys().hasOnly(['name', 'email', 'tallyFormId', 'availability', 'socials', 'heroImage', 'aboutImage', 'contactImage']) &&
     validStr(d.name, 80) &&
     validStr(d.email, 254) &&
     validOptionalStr(d, 'tallyFormId', 120) &&
     validOptionalStr(d, 'availability', 160) &&
+    validOptionalImageUrl(d, 'heroImage') &&
+    validOptionalImageUrl(d, 'aboutImage') &&
+    validOptionalImageUrl(d, 'contactImage') &&
     d.socials is list && d.socials.size() <= 8 &&
     (d.socials.size() <= 0 || isValidSocial(d.socials[0])) &&
     (d.socials.size() <= 1 || isValidSocial(d.socials[1])) &&
@@ -110,13 +123,14 @@ function isValidServices(d) {
 // content/clients validator (portfolio, max 4 by brief, <=6 headroom in rules)
 function isValidClientItem(c) {
   return c is map &&
-    c.keys().hasOnly(['slug', 'name', 'industry', 'did', 'need', 'approach', 'show', 'results']) &&
+    c.keys().hasOnly(['slug', 'name', 'industry', 'did', 'need', 'approach', 'show', 'results', 'coverImage']) &&
     validStr(c.slug, 40) && validStr(c.name, 80) &&
     validOptionalStr(c, 'industry', 80) &&
     c.did is list && c.did.size() <= 6 && validStrList(c.did, 80) &&
     validOptionalStr(c, 'need', 600) &&
     validOptionalStr(c, 'approach', 600) &&
     validOptionalStr(c, 'show', 600) &&
+    validOptionalImageUrl(c, 'coverImage') &&
     c.results is list && c.results.size() <= 8 && validStrList(c.results, 200);
 }
 function isValidClients(d) {

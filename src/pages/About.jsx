@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import Placeholder from "../components/Placeholder";
+import { site as siteDefaults } from "../data/site";
+import { useContent } from "../hooks/useContent";
 import "./About.css";
 
 export default function About() {
+  const { data: site } = useContent("site", siteDefaults);
   return (
     <section className="about section" aria-labelledby="about-title">
       <div className="container about__grid">
@@ -34,7 +37,7 @@ export default function About() {
           </div>
         </div>
         <div className="about__photo">
-          <Placeholder label="Self-portrait" ratio="4 / 5" />
+          <Placeholder label="Self-portrait" src={site.aboutImage} alt="Portrait of Sam" ratio="4 / 5" />
         </div>
       </div>
     </section>

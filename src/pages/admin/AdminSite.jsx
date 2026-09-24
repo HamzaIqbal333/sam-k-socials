@@ -47,6 +47,9 @@ export default function AdminSite() {
         email: form.email || "",
         tallyFormId: form.tallyFormId || "",
         availability: form.availability || "",
+        heroImage: form.heroImage?.trim() || null,
+        aboutImage: form.aboutImage?.trim() || null,
+        contactImage: form.contactImage?.trim() || null,
         socials: (form.socials || []).filter((s) => s.label?.trim() || s.href?.trim()),
       });
       setStatus("ok");
@@ -107,6 +110,41 @@ export default function AdminSite() {
         <p className="admin-status">
           Optional and now legacy — the Contact page uses its own Firestore-backed enquiry form.
           This is only used as a fallback embed if that isn't available.
+        </p>
+
+        <label>
+          Hero image URL (Home page, phone screen)
+          <input
+            type="url"
+            value={form?.heroImage || ""}
+            onChange={(e) => update("heroImage", e.target.value)}
+            maxLength={500}
+            placeholder="https://..."
+          />
+        </label>
+        <label>
+          About page photo URL
+          <input
+            type="url"
+            value={form?.aboutImage || ""}
+            onChange={(e) => update("aboutImage", e.target.value)}
+            maxLength={500}
+            placeholder="https://..."
+          />
+        </label>
+        <label>
+          Contact page photo URL
+          <input
+            type="url"
+            value={form?.contactImage || ""}
+            onChange={(e) => update("contactImage", e.target.value)}
+            maxLength={500}
+            placeholder="https://..."
+          />
+        </label>
+        <p className="admin-status">
+          Paste a direct image link (ending in .jpg/.png, or an Unsplash/CDN URL). Leave blank to
+          show a plain placeholder block instead.
         </p>
 
         <div>

@@ -63,7 +63,7 @@ export default function Contact() {
             )}
           </div>
           <div className="contact__photo">
-            <Placeholder label="Photo of Sam" ratio="4 / 5" />
+            <Placeholder label="Photo of Sam" src={site.contactImage} alt="Portrait of Sam" ratio="4 / 5" />
             <p className="contact__photo-caption">Sam, usually found on a client shoot</p>
           </div>
         </div>

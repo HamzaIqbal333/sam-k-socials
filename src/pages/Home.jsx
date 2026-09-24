@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Placeholder from "../components/Placeholder";
 import Testimonials from "../components/Testimonials";
 import Marquee from "../components/Marquee";
-import { services, site as siteDefaults } from "../data/site";
+import { services, clients, site as siteDefaults } from "../data/site";
 import { useContent } from "../hooks/useContent";
 import "./Home.css";
 
@@ -28,7 +28,13 @@ function Hero() {
         <div className="hero__stage">
           <div className="phone" aria-hidden="false">
             <span className="phone__island" aria-hidden="true" />
-            <Placeholder label="Hero image: Sam's client feed on iPhone" ratio="9 / 19" className="phone__screen" />
+            <Placeholder
+              label="Hero image: Sam's client feed on iPhone"
+              src={site.heroImage}
+              alt="Content creator holding a phone with a ring light, filming for social media"
+              ratio="9 / 19"
+              className="phone__screen"
+            />
           </div>
           <p className="ping ping--one" role="img" aria-label="Notification: new enquiry">
             <span className="ping__dot" aria-hidden="true" />
@@ -97,6 +103,8 @@ function ServicesCarousel() {
 }
 
 function Peek() {
+  const { data } = useContent("clients", { items: clients });
+  const samples = data.items.slice(0, 3);
   return (
     <section className="section" aria-labelledby="peek-title">
       <div className="container peek">
@@ -106,9 +114,16 @@ function Peek() {
           <Link className="btn btn--ghost" to="/portfolio">See the portfolio</Link>
         </div>
         <div className="peek__tiles">
-          <Placeholder label="Work sample 1" ratio="3 / 4" className="peek__tile" />
-          <Placeholder label="Work sample 2" ratio="3 / 4" className="peek__tile" />
-          <Placeholder label="Work sample 3" ratio="3 / 4" className="peek__tile" />
+          {samples.map((c) => (
+            <Placeholder
+              key={c.slug}
+              label={`Work sample: ${c.name}`}
+              src={c.coverImage}
+              alt={`${c.name} — ${c.industry}`}
+              ratio="3 / 4"
+              className="peek__tile"
+            />
+          ))}
         </div>
       </div>
     </section>

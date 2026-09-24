@@ -25,6 +25,8 @@ export default function Portfolio() {
                 <Link to={`/portfolio/${c.slug}`} className="gcard">
                   <Placeholder
                     label={`${c.name} cover image`}
+                    src={c.coverImage}
+                    alt={`${c.name} — ${c.industry}`}
                     ratio={i % 2 ? "1 / 1" : "4 / 5"}
                     className="gcard__img"
                   />

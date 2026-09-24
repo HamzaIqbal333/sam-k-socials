@@ -144,6 +144,10 @@ export default function CaseStudy() {
         </dl>
       </header>
 
+      <div className="container cs-cover">
+        <Placeholder label={`${c.name} cover image`} src={c.coverImage} alt={`${c.name} — ${c.industry}`} ratio="21 / 9" />
+      </div>
+
       <div className="container cs-parts">
         <Part id="cs-did" title="What did I do?">
           <ul className="cs-tags">
