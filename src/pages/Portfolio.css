@@ -44,17 +44,15 @@
 .gcard__industry { margin: 0 0 0.35em; font-weight: 600; }
 .gcard__did { margin: 0; font-size: var(--fs-small); max-width: 32ch; }
 .gcard__cta {
-  flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
+  flex: none;
   font-weight: 700; font-size: var(--fs-small);
   border-bottom: 2px solid currentColor; padding-bottom: 2px;
 }
-.gcard__cta svg { transition: transform 0.25s ease; }
 
 .gcard:hover, .gcard:focus-visible {
   transform: translate(-4px, -6px);
   box-shadow: 8px 10px 0 var(--c-ink);
 }
-.gcard:hover .gcard__cta svg, .gcard:focus-visible .gcard__cta svg { transform: translateX(5px); }
 .gcard:focus-visible { outline: 3px solid var(--c-ink); outline-offset: 4px; border-radius: var(--r-lg); }
 
 @media (max-width: 480px) {

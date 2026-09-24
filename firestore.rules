@@ -1,0 +1,210 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model — Sam K. Socials
+// ===============================================================
+//
+// content/site         { name, email, tallyFormId, availability, socials: [{label,href}] }  (<=8 socials)
+// content/services      { items: [{ id, title, kind, short, body, points: [string] }] }   (<=8 items)
+// content/clients       { items: [{ slug, name, industry, did:[string], need, approach, show, results:[string] }] }  (<=6 items)
+// content/testimonials  { items: [{ quote, name, business }] }  (<=8 items)
+// content/process       { items: [{ title, text }] }  (<=6 items)
+//   -> `content` docs are the website's own marketing copy (services, portfolio, testimonials,
+//      process steps, contact details). They contain no PII, so public READ is an intentional,
+//      explicit exception for this public marketing site. Only Sam can create/update them
+//      (delete is never allowed — losing one of these docs would break the live site).
+//
+// enquiries/{autoId}    { name, email, business?, service?, message, createdAt }
+//   -> Contains a visitor's PII (name, email, message). Visitors may only CREATE their own
+//      enquiry; only Sam (admin) may read, update or delete any enquiry.
+//
+// NOTE ON LIST VALIDATION: Firestore Rules doesn't reliably support `.filter()`/lambda-style
+// checks over a list of maps, so every bounded list below is validated by unrolling fixed
+// indices (`list.size() <= i || isValid(list[i])`) up to its max length, rather than looping.
+//
+// ===============================================================
+// Admin identity
+// ===============================================================
+// This is a single-admin site: there is no sign-up screen in the app, and only one Firebase
+// Auth user should ever exist for this project (created by hand in the console). Admin access
+// is granted purely by matching the logged-in email against this allowlist.
+// Currently set to the developer's account for testing. TODO: replace with Sam's real
+// login email before handing this off to the client, and keep this in sync with whatever
+// email she actually signs in with in /admin.
+function isAdminEmail() {
+  return request.auth != null &&
+    request.auth.token.email in ['hamza.iqbal81@yahoo.com'];
+}
+
+// ===============================================================
+// Helper functions
+// ===============================================================
+function validStr(field, maxLen) {
+  return field is string && field.size() > 0 && field.size() <= maxLen;
+}
+
+function validOptionalStr(data, field, maxLen) {
+  return !(field in data) || data[field] == null ||
+    (data[field] is string && data[field].size() <= maxLen);
+}
+
+// Validates every slot of a list of plain strings, up to 8 items (callers additionally
+// cap list.size() <= maxItems before calling this, so unused trailing slots are unreachable).
+function validStrList(list, maxLen) {
+  return list is list &&
+    (list.size() <= 0 || (list[0] is string && list[0].size() <= maxLen)) &&
+    (list.size() <= 1 || (list[1] is string && list[1].size() <= maxLen)) &&
+    (list.size() <= 2 || (list[2] is string && list[2].size() <= maxLen)) &&
+    (list.size() <= 3 || (list[3] is string && list[3].size() <= maxLen)) &&
+    (list.size() <= 4 || (list[4] is string && list[4].size() <= maxLen)) &&
+    (list.size() <= 5 || (list[5] is string && list[5].size() <= maxLen)) &&
+    (list.size() <= 6 || (list[6] is string && list[6].size() <= maxLen)) &&
+    (list.size() <= 7 || (list[7] is string && list[7].size() <= maxLen));
+}
+
+// content/site validator
+function isValidSocial(s) {
+  return s is map && s.keys().hasOnly(['label', 'href']) &&
+    s.label is string && s.label.size() <= 40 &&
+    s.href is string && s.href.size() <= 300;
+}
+function isValidSite(d) {
+  return d.keys().hasOnly(['name', 'email', 'tallyFormId', 'availability', 'socials']) &&
+    validStr(d.name, 80) &&
+    validStr(d.email, 254) &&
+    validOptionalStr(d, 'tallyFormId', 120) &&
+    validOptionalStr(d, 'availability', 160) &&
+    d.socials is list && d.socials.size() <= 8 &&
+    (d.socials.size() <= 0 || isValidSocial(d.socials[0])) &&
+    (d.socials.size() <= 1 || isValidSocial(d.socials[1])) &&
+    (d.socials.size() <= 2 || isValidSocial(d.socials[2])) &&
+    (d.socials.size() <= 3 || isValidSocial(d.socials[3])) &&
+    (d.socials.size() <= 4 || isValidSocial(d.socials[4])) &&
+    (d.socials.size() <= 5 || isValidSocial(d.socials[5])) &&
+    (d.socials.size() <= 6 || isValidSocial(d.socials[6])) &&
+    (d.socials.size() <= 7 || isValidSocial(d.socials[7]));
+}
+
+// content/services validator (<=8 items)
+function isValidServiceItem(s) {
+  return s is map &&
+    s.keys().hasOnly(['id', 'title', 'kind', 'short', 'body', 'points']) &&
+    validStr(s.id, 60) && validStr(s.title, 80) &&
+    validOptionalStr(s, 'kind', 60) &&
+    validOptionalStr(s, 'short', 160) &&
+    validStr(s.body, 800) &&
+    s.points is list && s.points.size() <= 8 && validStrList(s.points, 160);
+}
+function isValidServices(d) {
+  return d.keys().hasOnly(['items']) && d.items is list && d.items.size() <= 8 &&
+    (d.items.size() <= 0 || isValidServiceItem(d.items[0])) &&
+    (d.items.size() <= 1 || isValidServiceItem(d.items[1])) &&
+    (d.items.size() <= 2 || isValidServiceItem(d.items[2])) &&
+    (d.items.size() <= 3 || isValidServiceItem(d.items[3])) &&
+    (d.items.size() <= 4 || isValidServiceItem(d.items[4])) &&
+    (d.items.size() <= 5 || isValidServiceItem(d.items[5])) &&
+    (d.items.size() <= 6 || isValidServiceItem(d.items[6])) &&
+    (d.items.size() <= 7 || isValidServiceItem(d.items[7]));
+}
+
+// content/clients validator (portfolio, max 4 by brief, <=6 headroom in rules)
+function isValidClientItem(c) {
+  return c is map &&
+    c.keys().hasOnly(['slug', 'name', 'industry', 'did', 'need', 'approach', 'show', 'results']) &&
+    validStr(c.slug, 40) && validStr(c.name, 80) &&
+    validOptionalStr(c, 'industry', 80) &&
+    c.did is list && c.did.size() <= 6 && validStrList(c.did, 80) &&
+    validOptionalStr(c, 'need', 600) &&
+    validOptionalStr(c, 'approach', 600) &&
+    validOptionalStr(c, 'show', 600) &&
+    c.results is list && c.results.size() <= 8 && validStrList(c.results, 200);
+}
+function isValidClients(d) {
+  return d.keys().hasOnly(['items']) && d.items is list && d.items.size() <= 6 &&
+    (d.items.size() <= 0 || isValidClientItem(d.items[0])) &&
+    (d.items.size() <= 1 || isValidClientItem(d.items[1])) &&
+    (d.items.size() <= 2 || isValidClientItem(d.items[2])) &&
+    (d.items.size() <= 3 || isValidClientItem(d.items[3])) &&
+    (d.items.size() <= 4 || isValidClientItem(d.items[4])) &&
+    (d.items.size() <= 5 || isValidClientItem(d.items[5]));
+}
+
+// content/testimonials validator (<=8 items)
+function isValidTestimonialItem(t) {
+  return t is map && t.keys().hasOnly(['quote', 'name', 'business']) &&
+    validStr(t.quote, 600) && validStr(t.name, 80) && validOptionalStr(t, 'business', 100);
+}
+function isValidTestimonials(d) {
+  return d.keys().hasOnly(['items']) && d.items is list && d.items.size() <= 8 &&
+    (d.items.size() <= 0 || isValidTestimonialItem(d.items[0])) &&
+    (d.items.size() <= 1 || isValidTestimonialItem(d.items[1])) &&
+    (d.items.size() <= 2 || isValidTestimonialItem(d.items[2])) &&
+    (d.items.size() <= 3 || isValidTestimonialItem(d.items[3])) &&
+    (d.items.size() <= 4 || isValidTestimonialItem(d.items[4])) &&
+    (d.items.size() <= 5 || isValidTestimonialItem(d.items[5])) &&
+    (d.items.size() <= 6 || isValidTestimonialItem(d.items[6])) &&
+    (d.items.size() <= 7 || isValidTestimonialItem(d.items[7]));
+}
+
+// content/process validator (<=6 items)
+function isValidProcessItem(p) {
+  return p is map && p.keys().hasOnly(['title', 'text']) &&
+    validStr(p.title, 60) && validStr(p.text, 300);
+}
+function isValidProcess(d) {
+  return d.keys().hasOnly(['items']) && d.items is list && d.items.size() <= 6 &&
+    (d.items.size() <= 0 || isValidProcessItem(d.items[0])) &&
+    (d.items.size() <= 1 || isValidProcessItem(d.items[1])) &&
+    (d.items.size() <= 2 || isValidProcessItem(d.items[2])) &&
+    (d.items.size() <= 3 || isValidProcessItem(d.items[3])) &&
+    (d.items.size() <= 4 || isValidProcessItem(d.items[4])) &&
+    (d.items.size() <= 5 || isValidProcessItem(d.items[5]));
+}
+
+// enquiries/{id} validator — public-facing, so this is the most security-sensitive check here.
+function isValidNewEnquiry(d) {
+  return d.keys().hasOnly(['name', 'email', 'business', 'service', 'message', 'createdAt']) &&
+    validStr(d.name, 120) &&
+    validStr(d.email, 254) &&
+    validOptionalStr(d, 'business', 160) &&
+    validOptionalStr(d, 'service', 80) &&
+    validStr(d.message, 4000) &&
+    d.createdAt == request.time; // must be set via serverTimestamp(), not client-supplied
+}
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /content/site {
+      allow read: if true;
+      allow create, update: if isAdminEmail() && isValidSite(request.resource.data);
+    }
+    match /content/services {
+      allow read: if true;
+      allow create, update: if isAdminEmail() && isValidServices(request.resource.data);
+    }
+    match /content/clients {
+      allow read: if true;
+      allow create, update: if isAdminEmail() && isValidClients(request.resource.data);
+    }
+    match /content/testimonials {
+      allow read: if true;
+      allow create, update: if isAdminEmail() && isValidTestimonials(request.resource.data);
+    }
+    match /content/process {
+      allow read: if true;
+      allow create, update: if isAdminEmail() && isValidProcess(request.resource.data);
+    }
+
+    match /enquiries/{id} {
+      allow create: if isValidNewEnquiry(request.resource.data);
+      allow read, update, delete: if isAdminEmail();
+    }
+
+    // Everything else is denied by default (Firestore's implicit default-deny),
+    // this line just makes that explicit and future-proofs against typos above.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

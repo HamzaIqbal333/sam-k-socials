@@ -4,7 +4,10 @@
   grid-template-columns: 1fr;
 }
 .about__text h1 { max-width: 16ch; }
-.about__cta { margin-top: 1.5rem; }
+.about__role { font: 700 1.05rem var(--f-body); color: var(--c-ink-soft); margin: -0.3rem 0 1.35rem; max-width: 42ch; }
+.about__traits { list-style: none; margin: 1.85rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem 0.7rem; max-width: 48ch; }
+.about__traits li { border: 2px solid var(--c-ink); border-radius: var(--r-pill); padding: 0.55rem 1.15rem; font-size: var(--fs-small); font-weight: 600; background: var(--c-surface); }
+.about__cta { margin-top: 2.25rem; }
 .about__photo { position: relative; max-width: 460px; width: 100%; }
 .about__photo::before {
   content: ""; position: absolute; inset: 0; transform: translate(14px, 14px) rotate(2deg);

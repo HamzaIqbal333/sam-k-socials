@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { nav, site } from "../data/site";
+import { nav, site as siteDefaults } from "../data/site";
+import { useContent } from "../hooks/useContent";
 import "./Footer.css";
 
 export default function Footer() {
+  const { data: site } = useContent("site", siteDefaults);
   return (
     <footer className="footer">
       <div className="container footer__inner">

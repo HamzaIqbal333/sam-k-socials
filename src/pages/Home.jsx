@@ -2,10 +2,13 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Placeholder from "../components/Placeholder";
 import Testimonials from "../components/Testimonials";
-import { services } from "../data/site";
+import Marquee from "../components/Marquee";
+import { services, site as siteDefaults } from "../data/site";
+import { useContent } from "../hooks/useContent";
 import "./Home.css";
 
 function Hero() {
+  const { data: site } = useContent("site", siteDefaults);
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="container hero__grid">
@@ -19,6 +22,7 @@ function Hero() {
             <Link className="btn btn--ghost" to="/services">Explore Services</Link>
             <Link className="btn btn--primary" to="/contact">Let's work together</Link>
           </div>
+          <p className="hero__avail"><span className="hero__avail-dot" aria-hidden="true" />{site.availability}</p>
         </div>
 
         <div className="hero__stage">
@@ -43,6 +47,7 @@ function Hero() {
 function ServicesCarousel() {
   const track = useRef(null);
   const [edge, setEdge] = useState({ start: true, end: false });
+  const { data } = useContent("services", { items: services });
 
   const update = useCallback(() => {
     const el = track.current;
@@ -79,7 +84,7 @@ function ServicesCarousel() {
         </div>
       </div>
       <ul className="svc-track" ref={track} onScroll={update} role="list" aria-label="Services">
-        {services.map((s, i) => (
+        {data.items.map((s, i) => (
           <li className={`svc svc--${i % 4}`} key={s.id}>
             <h3>{s.title}</h3>
             <p>{s.short}</p>
@@ -147,6 +152,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Marquee />
       <ServicesCarousel />
       <Peek />
       <Why />

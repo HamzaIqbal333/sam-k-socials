@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { services, process } from "../data/site";
+import { useContent } from "../hooks/useContent";
 import Testimonials from "../components/Testimonials";
 import "./Services.css";
 
@@ -8,18 +9,22 @@ const tones = ["pink", "zest", "sky", "milk", "ink"];
 
 export default function Services() {
   const { hash } = useLocation();
-  const [open, setOpen] = useState(services[0].id);
+  const { data: servicesData } = useContent("services", { items: services });
+  const { data: processData } = useContent("process", { items: process });
+  const serviceItems = servicesData.items;
+  const processItems = processData.items;
+  const [open, setOpen] = useState(serviceItems[0]?.id ?? null);
 
   // Deep link: /services#content-sessions opens that card.
   useEffect(() => {
     const id = hash.replace("#", "");
-    if (services.some((s) => s.id === id)) {
+    if (serviceItems.some((s) => s.id === id)) {
       setOpen(id);
       requestAnimationFrame(() =>
         document.getElementById(id)?.scrollIntoView({ block: "start" })
       );
     }
-  }, [hash]);
+  }, [hash, serviceItems]);
 
   const toggle = (id) => {
     setOpen((cur) => (cur === id ? null : id));
@@ -45,7 +50,7 @@ export default function Services() {
         <div className="container">
           <h2 id="deck-title" className="svc-deck__title">What I can do for you</h2>
           <div className="svc-deck">
-            {services.map((s, i) => {
+            {serviceItems.map((s, i) => {
               const isOpen = open === s.id;
               return (
                 <article
@@ -66,7 +71,7 @@ export default function Services() {
                       onClick={() => toggle(s.id)}
                     >
                       <span className="svc-card__title">{s.title}</span>
-                      <span className="svc-card__short">{s.short}</span>
+                      <span className="svc-card__kind">{s.kind}</span>
                       <span className="svc-card__icon" aria-hidden="true" />
                     </button>
                   </h3>
@@ -97,7 +102,7 @@ export default function Services() {
         <div className="container">
           <h2 id="process-title">How working together goes</h2>
           <ol className="svc-process">
-            {process.map((p, i) => (
+            {processItems.map((p, i) => (
               <li className="svc-process__step" key={p.title}>
                 <span className="svc-process__num" aria-hidden="true">{i + 1}</span>
                 <h3>{p.title}</h3>

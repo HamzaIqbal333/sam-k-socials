@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { nav, site } from "../data/site";
+import { nav, site as siteDefaults } from "../data/site";
+import { useContent } from "../hooks/useContent";
 import "./Header.css";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { data: site } = useContent("site", siteDefaults);
   return (
     <header className="header">
       <div className="container header__inner">

@@ -9,6 +9,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
     <title>Sam K. Socials | Social media, content and ads</title>
+    <script>
+      // GitHub Pages has no server-side rewrites, so a direct visit to e.g. /services 404s.
+      // 404.html redirects here with the intended path packed into the query string;
+      // this restores it via history.replaceState before the app mounts.
+      // https://github.com/rafgraph/spa-github-pages — no-op on any other host (Firebase Hosting,
+      // Vercel/Netlify, the local dev server) since they never produce this "?/" pattern.
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) { return s.replace(/~and~/g, "&"); })
+            .join("?");
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
   </head>
   <body>
     <div id="root"></div>

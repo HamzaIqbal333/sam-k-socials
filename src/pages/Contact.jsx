@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import Placeholder from "../components/Placeholder";
 import EnquiryForm from "../components/EnquiryForm";
-import { supabaseEnabled } from "../lib/supabase";
-import { site } from "../data/site";
+import { firebaseEnabled } from "../lib/firebase";
+import { site as siteDefaults } from "../data/site";
+import { useContent } from "../hooks/useContent";
 import "./Contact.css";
 
 const EMBED_SRC = "https://tally.so/widgets/embed.js";
@@ -25,8 +26,9 @@ function useTally(enabled) {
 }
 
 export default function Contact() {
+  const { data: site } = useContent("site", siteDefaults);
   const connected = site.tallyFormId && site.tallyFormId !== "REPLACE_WITH_TALLY_FORM_ID";
-  const useNative = supabaseEnabled;
+  const useNative = firebaseEnabled;
   useTally(connected && !useNative);
 
   return (
@@ -34,7 +36,8 @@ export default function Contact() {
       <div className="container">
         <h1 id="contact-title">Tell me about your business</h1>
         <p className="lede contact__next">
-          Send the form and I'll reply within 2 working days to book a chat, then send you a plan.
+          Send the form and I'll personally reply within 2 working days to book a short call,
+          then follow up with a plan for your socials.
         </p>
 
         <div className="contact__grid">
@@ -61,6 +64,7 @@ export default function Contact() {
           </div>
           <div className="contact__photo">
             <Placeholder label="Photo of Sam" ratio="4 / 5" />
+            <p className="contact__photo-caption">Sam, usually found on a client shoot</p>
           </div>
         </div>
 

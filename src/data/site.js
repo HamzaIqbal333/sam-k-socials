@@ -3,6 +3,7 @@ export const site = {
   name: "Sam K. Socials",
   email: "hello@samksocials.com", // TODO: confirm real email
   tallyFormId: "REPLACE_WITH_TALLY_FORM_ID", // TODO: from your Tally share link (tally.so/r/<id>)
+  availability: "Booking new partnerships for next month", // TODO: keep current or swap for a waitlist line
   socials: [
     { label: "Instagram", href: "https://instagram.com/" }, // TODO: real handles
     { label: "TikTok", href: "https://tiktok.com/" },
@@ -22,6 +23,7 @@ export const services = [
   {
     id: "social-media-management",
     title: "Social Media Management",
+    kind: "Ongoing, done-for-you",
     short: "Done-for-you social, week in, week out.",
     body: "Ongoing, done-for-you social media support including strategy, planning, content creation, copywriting, scheduling, optimisation and reporting depending on scope.",
     points: ["Strategy and monthly planning", "Content creation and copywriting", "Scheduling and community care", "Optimisation and reporting"],
@@ -29,6 +31,7 @@ export const services = [
   {
     id: "content-strategy",
     title: "Content Strategy",
+    kind: "One-off roadmap",
     short: "A clear roadmap, so your socials don't sink.",
     body: "A one-off strategic roadmap to get clarity around your audience, direction, content pillars, platforms and what you should be creating to stand out, not sink your socials boat.",
     points: ["Audience and platform clarity", "Content pillars and ideas", "Direction you can run with yourself", "One-off, no ongoing commitment"],
@@ -36,6 +39,7 @@ export const services = [
   {
     id: "content-sessions",
     title: "Content Sessions",
+    kind: "One-off, on location",
     short: "On-location photo and video, shot on iPhone.",
     body: "On-location social-first photo and video content captured on iPhone. Includes planning, shot lists, content capture and raw/edited assets depending on the package.",
     points: ["Planning and shot lists", "On-location capture", "Raw or edited assets", "Built for Reels, Stories and feed"],
@@ -43,6 +47,7 @@ export const services = [
   {
     id: "meta-google-ads",
     title: "Meta & Google Ads",
+    kind: "Ongoing, paid media",
     short: "Paid campaigns that bring in enquiries.",
     body: "Strategy, setup, management and optimisation of Meta & Google advertising campaigns.",
     points: ["Campaign strategy and setup", "Creative and audience testing", "Ongoing optimisation", "Clear performance reporting"],
@@ -50,6 +55,7 @@ export const services = [
   {
     id: "custom-support",
     title: "Custom Support",
+    kind: "Flexible, mix and match",
     short: "A bit of this and a bit of that? Totally okay.",
     body: "Think you need a bit of this and a bit of that? Totally okay! Services can be combined into custom packages based on the business, goals and scope.",
     points: ["Mix any services together", "Shaped around your goals", "Scoped to your budget"],

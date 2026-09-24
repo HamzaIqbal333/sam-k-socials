@@ -1,14 +1,16 @@
 import { Link, useParams } from "react-router-dom";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Placeholder from "../components/Placeholder.jsx";
 import { clients } from "../data/site.js";
+import { useContent } from "../hooks/useContent";
 import "./CaseStudy.css";
 
 const tiles = [
-  { label: "Reel", ratio: "9 / 16", tone: "pink", span: "tall" },
+  { label: "Reel", ratio: "9 / 16", tone: "pink" },
   { label: "Static post", ratio: "1 / 1", tone: "sky" },
-  { label: "Story", ratio: "9 / 16", tone: "zest", span: "tall" },
+  { label: "Story", ratio: "9 / 16", tone: "zest" },
   { label: "Static post", ratio: "4 / 5", tone: "sky" },
-  { label: "Reel", ratio: "9 / 16", tone: "sky", span: "tall" },
+  { label: "Reel", ratio: "9 / 16", tone: "sky" },
   { label: "Launch graphic", ratio: "1 / 1", tone: "pink" },
 ];
 
@@ -21,9 +23,94 @@ function Part({ id, title, children }) {
   );
 }
 
+/* Horizontal drag-to-scroll filmstrip: mouse drag, touch swipe (native),
+   arrow keys when focused, and prev/next buttons that work without a mouse. */
+function ShowFilmstrip({ items, clientName }) {
+  const track = useRef(null);
+  const drag = useRef({ active: false, moved: false, startX: 0, startScroll: 0 });
+  const [edge, setEdge] = useState({ start: true, end: false });
+
+  const update = useCallback(() => {
+    const el = track.current;
+    if (!el) return;
+    setEdge({ start: el.scrollLeft <= 4, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4 });
+  }, []);
+
+  useEffect(() => {
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [update]);
+
+  const scrollByTile = (dir) => {
+    const el = track.current;
+    const tile = el.querySelector(".cs-tile");
+    const step = tile ? tile.getBoundingClientRect().width + 18 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
+  const onPointerDown = (e) => {
+    if (e.pointerType === "touch") return; // native touch scrolling already handles swipe
+    const el = track.current;
+    drag.current = { active: true, moved: false, startX: e.clientX, startScroll: el.scrollLeft };
+    el.setPointerCapture(e.pointerId);
+    el.classList.add("is-dragging");
+  };
+  const onPointerMove = (e) => {
+    if (!drag.current.active) return;
+    const el = track.current;
+    const dx = e.clientX - drag.current.startX;
+    if (Math.abs(dx) > 3) drag.current.moved = true;
+    el.scrollLeft = drag.current.startScroll - dx;
+  };
+  const endDrag = () => {
+    drag.current.active = false;
+    track.current?.classList.remove("is-dragging");
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); scrollByTile(1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); scrollByTile(-1); }
+  };
+
+  return (
+    <div className="cs-filmstrip">
+      <div className="cs-filmstrip__nav">
+        <button type="button" className="cs-filmstrip__btn" onClick={() => scrollByTile(-1)} disabled={edge.start} aria-label="Previous samples">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        </button>
+        <button type="button" className="cs-filmstrip__btn" onClick={() => scrollByTile(1)} disabled={edge.end} aria-label="Next samples">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+      <ul
+        className="cs-tiles"
+        ref={track}
+        role="list"
+        aria-label={`${clientName} work samples, scroll horizontally or use arrow keys`}
+        tabIndex={0}
+        onScroll={update}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+        onKeyDown={onKeyDown}
+      >
+        {items.map((t, i) => (
+          <li key={i} className={`cs-tile cs-tile--${t.tone}`}>
+            <Placeholder label={`${clientName} ${t.label.toLowerCase()}`} ratio={t.ratio} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function CaseStudy() {
   const { slug } = useParams();
-  const idx = clients.findIndex((c) => c.slug === slug);
+  const { data } = useContent("clients", { items: clients });
+  const items = data.items;
+  const idx = items.findIndex((c) => c.slug === slug);
 
   if (idx === -1) {
     return (
@@ -35,8 +122,8 @@ export default function CaseStudy() {
     );
   }
 
-  const c = clients[idx];
-  const next = clients[(idx + 1) % clients.length];
+  const c = items[idx];
+  const next = items[(idx + 1) % items.length];
 
   return (
     <>
@@ -77,15 +164,11 @@ export default function CaseStudy() {
         <div className="container">
           <h2 id="cs-show" className="cs-show__title">What can I show?</h2>
           <p className="lede">{c.show}</p>
+        </div>
 
-          <ul className="cs-tiles">
-            {tiles.map((t, i) => (
-              <li key={i} className={`cs-tile cs-tile--${t.tone}`}>
-                <Placeholder label={`${c.name} ${t.label.toLowerCase()}`} ratio={t.ratio} />
-              </li>
-            ))}
-          </ul>
+        <ShowFilmstrip items={tiles} clientName={c.name} />
 
+        <div className="container">
           <div className="cs-feed">
             <figure className="cs-feed__item">
               <Placeholder label={`${c.name} feed before`} ratio="3 / 4" />

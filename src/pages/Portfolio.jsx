@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import Placeholder from "../components/Placeholder.jsx";
 import { clients } from "../data/site.js";
+import { useContent } from "../hooks/useContent";
 import "./Portfolio.css";
 
 export default function Portfolio() {
+  const { data } = useContent("clients", { items: clients });
+
   return (
     <>
       <section className="section portfolio-intro">
@@ -17,7 +20,7 @@ export default function Portfolio() {
       <section className="portfolio-gallery" aria-label="Client case studies">
         <div className="container">
           <ul className="gallery">
-            {clients.map((c, i) => (
+            {data.items.map((c, i) => (
               <li key={c.slug} className={`gallery__item gallery__item--${i % 4}`}>
                 <Link to={`/portfolio/${c.slug}`} className="gcard">
                   <Placeholder
@@ -31,12 +34,7 @@ export default function Portfolio() {
                       <p className="gcard__industry">{c.industry}</p>
                       <p className="gcard__did">{c.did.join(", ")}</p>
                     </div>
-                    <span className="gcard__cta">
-                      View case study
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                        <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
+                    <span className="gcard__cta">View case study</span>
                   </div>
                 </Link>
               </li>

@@ -3,6 +3,14 @@
 .hero__grid { display: grid; gap: 3rem; align-items: center; grid-template-columns: 1.15fr 0.85fr; }
 .hero__text h1 { font-size: var(--fs-hero); margin-bottom: 0.4em; max-width: 14ch; }
 .hero__text .lede { margin-bottom: 2rem; max-width: 46ch; }
+.hero__avail {
+  display: inline-flex; align-items: center; gap: 0.55rem; margin: 1.5rem 0 0;
+  font-size: var(--fs-small); color: var(--c-ink-soft);
+}
+.hero__avail-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #3ecf6a; flex: none;
+  box-shadow: 0 0 0 4px color-mix(in srgb, #3ecf6a 18%, transparent);
+}
 
 .hero__stage { position: relative; display: grid; place-items: center; padding: 1.5rem 0; }
 .hero__stage::before {

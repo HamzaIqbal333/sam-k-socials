@@ -8,6 +8,9 @@ export default function About() {
       <div className="container about__grid">
         <div className="about__text">
           <h1 id="about-title">Hi, I'm Sam. I make social feel less like a chore.</h1>
+          <p className="about__role">
+            Social media manager and content creator for food, wellness and local-service businesses.
+          </p>
           <p className="lede">
             I run social media for small businesses that are great at what they do and too busy to post about it.
           </p>
@@ -17,10 +20,15 @@ export default function About() {
             phone and running paid campaigns across food, wellness and local services.
           </p>
           <p>
-            With clients, I listen first and talk in plain English. You'll always know what's going
-            out, why it's going out, and what it did. My work ethos is simple: be consistent, be
-            honest about what's working, and never post just to fill a gap.
+            With clients, I listen first and talk in plain English, and my ethos is simple: be
+            consistent, be honest about what's working, and never post just to fill a gap.
           </p>
+          <ul className="about__traits" aria-label="What working with Sam is like">
+            <li>You'll always know what's going out, and why</li>
+            <li>Consistent posting, not bursts and silence</li>
+            <li>Honest reporting on what's working, and what isn't</li>
+            <li>You work with me directly, not an account team</li>
+          </ul>
           <div className="btn-row about__cta">
             <Link className="btn btn--primary" to="/contact">Start a conversation</Link>
           </div>

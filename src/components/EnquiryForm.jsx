@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db, firebaseEnabled } from "../lib/firebase";
 import { services } from "../data/site";
 import "./EnquiryForm.css";
 
@@ -12,17 +13,23 @@ export default function EnquiryForm() {
     const d = new FormData(form);
     if (d.get("website")) return; // honeypot: bots fill this hidden field
     setStatus("sending");
-    const { error } = await supabase.from("enquiries").insert({
-      name: d.get("name").trim(),
-      email: d.get("email").trim(),
-      business: d.get("business").trim() || null,
-      service: d.get("service") || null,
-      message: d.get("message").trim(),
-    });
-    if (error) { setStatus("error"); return; }
-    form.reset();
-    setStatus("sent");
+    try {
+      await addDoc(collection(db, "enquiries"), {
+        name: d.get("name").trim(),
+        email: d.get("email").trim(),
+        business: d.get("business").trim() || null,
+        service: d.get("service") || null,
+        message: d.get("message").trim(),
+        createdAt: serverTimestamp(),
+      });
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   }
+
+  if (!firebaseEnabled) return null; // Contact.jsx only renders this once Firebase is configured
 
   if (status === "sent") {
     return (
