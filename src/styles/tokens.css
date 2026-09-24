@@ -1,0 +1,31 @@
+/* BRAND TOKENS: swap these values when the brand kit arrives. Nothing else hardcodes colors or fonts. */
+:root {
+  --c-bg: #f6f3ff;
+  --c-surface: #ffffff;
+  --c-ink: #26173b;
+  --c-ink-soft: #5b4d70;
+  --c-accent: #ff5c8a;
+  --c-accent-ink: #26173b; /* text on accent */
+  --c-zest: #d7f26b;
+  --c-sky: #a9cbff;
+  --c-line: #dcd3ee;
+
+  --f-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --f-body: "Figtree", system-ui, sans-serif;
+
+  --fs-hero: clamp(2.6rem, 6.5vw, 5.6rem);
+  --fs-h1: clamp(2.2rem, 4.5vw, 3.8rem);
+  --fs-h2: clamp(1.7rem, 3vw, 2.5rem);
+  --fs-h3: 1.35rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9rem;
+
+  --r-sm: 10px;
+  --r-md: 20px;
+  --r-lg: 32px;
+  --r-pill: 999px;
+
+  --space-section: clamp(4rem, 9vw, 7.5rem);
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --max-w: 1200px;
+}

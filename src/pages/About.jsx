@@ -1,0 +1,34 @@
+import { Link } from "react-router-dom";
+import Placeholder from "../components/Placeholder";
+import "./About.css";
+
+export default function About() {
+  return (
+    <section className="about section" aria-labelledby="about-title">
+      <div className="container about__grid">
+        <div className="about__text">
+          <h1 id="about-title">Hi, I'm Sam. I make social feel less like a chore.</h1>
+          <p className="lede">
+            I run social media for small businesses that are great at what they do and too busy to post about it.
+          </p>
+          <p>
+            I started out posting for a friend's café and watched a few honest, well-timed Reels
+            fill her tables. Since then I've spent years managing accounts, shooting content on my
+            phone and running paid campaigns across food, wellness and local services.
+          </p>
+          <p>
+            With clients, I listen first and talk in plain English. You'll always know what's going
+            out, why it's going out, and what it did. My work ethos is simple: be consistent, be
+            honest about what's working, and never post just to fill a gap.
+          </p>
+          <div className="btn-row about__cta">
+            <Link className="btn btn--primary" to="/contact">Start a conversation</Link>
+          </div>
+        </div>
+        <div className="about__photo">
+          <Placeholder label="Self-portrait" ratio="4 / 5" />
+        </div>
+      </div>
+    </section>
+  );
+}

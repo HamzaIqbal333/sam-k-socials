@@ -1,0 +1,67 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--f-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+
+h1, h2, h3, h4 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); line-height: 1.2; }
+p { margin: 0 0 1em; max-width: 62ch; text-wrap: pretty; }
+
+:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 3px; border-radius: 4px; }
+
+.container { width: min(100% - 2 * var(--gutter), var(--max-w)); margin-inline: auto; }
+.section { padding-block: var(--space-section); }
+.section--tint { background: var(--c-surface); }
+.section--ink { background: var(--c-ink); color: var(--c-bg); }
+.section--ink .lede { color: #d9cdf0; }
+.lede { font-size: 1.2rem; color: var(--c-ink-soft); }
+
+/* Buttons: primary = Enquire, secondary = quieter route */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.95rem 1.7rem; border-radius: var(--r-pill);
+  font: 600 1rem var(--f-body); text-decoration: none; cursor: pointer;
+  border: 2px solid var(--c-ink);
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--primary { background: var(--c-accent); color: var(--c-accent-ink); }
+.btn--primary:hover { background: var(--c-zest); }
+.btn--ghost { background: transparent; color: inherit; border-color: currentColor; }
+.btn--ghost:hover { background: var(--c-ink); color: var(--c-bg); }
+.section--ink .btn--ghost:hover { background: var(--c-bg); color: var(--c-ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+/* Image placeholder: replace <Placeholder> with a real <img> once photos arrive */
+.placeholder {
+  display: grid; place-items: center; text-align: center; padding: 1rem;
+  background: repeating-linear-gradient(135deg, var(--c-sky) 0 14px, #bcd7ff 14px 28px);
+  color: var(--c-ink); font-weight: 600; font-size: var(--fs-small);
+  border-radius: var(--r-md);
+}
+
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--c-ink); color: #fff; padding: 0.6rem 1rem; z-index: 100; }
+.skip-link:focus { left: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

@@ -1,0 +1,96 @@
+/* Hero */
+.hero { padding-block: clamp(2.5rem, 6vw, 5rem) var(--space-section); overflow: hidden; }
+.hero__grid { display: grid; gap: 3rem; align-items: center; grid-template-columns: 1.15fr 0.85fr; }
+.hero__text h1 { font-size: var(--fs-hero); margin-bottom: 0.4em; max-width: 14ch; }
+.hero__text .lede { margin-bottom: 2rem; max-width: 46ch; }
+
+.hero__stage { position: relative; display: grid; place-items: center; padding: 1.5rem 0; }
+.hero__stage::before {
+  content: ""; position: absolute; inset: 6% 4%; background: var(--c-zest);
+  border-radius: 46% 54% 50% 50% / 55% 45% 55% 45%; transform: rotate(-8deg);
+}
+.phone {
+  position: relative; width: min(100%, 290px); padding: 11px; background: var(--c-ink);
+  border-radius: 46px; transform: rotate(3deg);
+  box-shadow: 10px 12px 0 var(--c-accent);
+}
+.phone__screen { border-radius: 36px; }
+.phone__island {
+  position: absolute; top: 20px; left: 50%; translate: -50% 0; width: 84px; height: 24px;
+  background: var(--c-ink); border-radius: var(--r-pill); z-index: 2;
+}
+
+/* The one moment: enquiries pop onto the phone once on load */
+.ping {
+  position: absolute; z-index: 3; display: flex; gap: 0.6rem; align-items: flex-start; margin: 0;
+  max-width: 230px; padding: 0.7rem 0.95rem; background: var(--c-surface);
+  border: 2px solid var(--c-ink); border-radius: var(--r-md); font-size: var(--fs-small); line-height: 1.35;
+  animation: ping-in 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+.ping__dot { flex: none; width: 12px; height: 12px; margin-top: 0.3rem; border-radius: 50%; background: var(--c-accent); }
+.ping--one { left: -6%; top: 22%; animation-delay: 0.7s; }
+.ping--two { right: -4%; bottom: 16%; animation-delay: 1.5s; }
+@keyframes ping-in { from { opacity: 0; transform: translateY(14px) scale(0.85); } to { opacity: 1; transform: none; } }
+
+/* Services carousel */
+.svc-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+.svc-head h2 { margin: 0; max-width: 18ch; }
+.svc-nav { display: flex; gap: 0.6rem; flex: none; }
+.svc-nav__btn {
+  display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%;
+  border: 2px solid var(--c-ink); background: transparent; color: var(--c-ink); cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.svc-nav__btn:hover:not(:disabled) { background: var(--c-ink); color: var(--c-bg); }
+.svc-nav__btn:disabled { opacity: 0.3; cursor: default; }
+
+.svc-track {
+  display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0.5rem var(--gutter) 1.5rem;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+  scrollbar-width: thin; scrollbar-color: var(--c-ink) var(--c-line);
+}
+@media (min-width: 1300px) {
+  .svc-track { padding-inline: calc((100vw - var(--max-w)) / 2); scroll-padding-inline: calc((100vw - var(--max-w)) / 2); }
+}
+.svc {
+  flex: none; width: min(78vw, 320px); min-height: 300px; scroll-snap-align: start;
+  display: flex; flex-direction: column; padding: 1.75rem; border: 2px solid var(--c-ink);
+  border-radius: var(--r-lg); background: var(--c-bg);
+}
+.svc--0 { background: var(--c-zest); }
+.svc--1 { background: var(--c-sky); }
+.svc--2 { background: var(--c-bg); }
+.svc--3 { background: var(--c-accent); }
+.svc h3 { font-size: 1.6rem; }
+.svc p { flex: 1; }
+.svc__link { font-weight: 700; text-underline-offset: 4px; }
+.svc__link:hover { text-decoration-thickness: 3px; }
+
+/* Peek */
+.peek { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 3rem; align-items: center; }
+.peek__tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.peek__tile:nth-child(2) { translate: 0 1.5rem; }
+.peek__tile { border: 2px solid var(--c-ink); }
+
+/* Why */
+.why { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 3rem; align-items: start; }
+.why h2 { margin: 0; }
+
+/* Closer */
+.closer h2 { font-size: var(--fs-h1); max-width: 16ch; }
+.closer .lede { max-width: 44ch; margin-bottom: 1.75rem; }
+
+@media (max-width: 860px) {
+  .hero__grid, .peek, .why { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero__stage { max-width: 420px; margin-inline: auto; width: 100%; }
+  .ping--one { left: 0; }
+  .ping--two { right: 0; }
+}
+@media (max-width: 480px) {
+  .hero__text .btn-row .btn { flex: 1 1 100%; }
+  .svc-head { align-items: start; flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-track { scroll-behavior: auto; }
+  .ping { animation: none; }
+}

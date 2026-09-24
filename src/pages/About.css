@@ -1,0 +1,17 @@
+.about { padding-block: clamp(2.5rem, 6vw, 5rem); }
+.about__grid {
+  display: grid; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;
+  grid-template-columns: 1fr;
+}
+.about__text h1 { max-width: 16ch; }
+.about__cta { margin-top: 1.5rem; }
+.about__photo { position: relative; max-width: 460px; width: 100%; }
+.about__photo::before {
+  content: ""; position: absolute; inset: 0; transform: translate(14px, 14px) rotate(2deg);
+  background: var(--c-zest); border-radius: var(--r-lg); z-index: 0;
+}
+.about__photo .placeholder { position: relative; z-index: 1; border-radius: var(--r-lg); border: 2px solid var(--c-ink); }
+@media (min-width: 860px) {
+  .about__grid { grid-template-columns: 1.15fr 0.85fr; }
+  .about__photo { justify-self: end; }
+}

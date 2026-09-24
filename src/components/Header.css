@@ -1,0 +1,15 @@
+.header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--c-bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--c-line); }
+.header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
+.header__logo { font: 800 1.4rem var(--f-display); letter-spacing: -0.03em; text-decoration: none; }
+.header__nav { display: flex; gap: 2rem; }
+.header__nav a { text-decoration: none; font-weight: 500; padding-block: 0.3rem; border-bottom: 2px solid transparent; }
+.header__nav a:hover { border-color: var(--c-accent); }
+.header__nav a.active { border-color: var(--c-ink); }
+.header__toggle { display: none; font: 600 1rem var(--f-body); background: none; border: 2px solid var(--c-ink); color: inherit; border-radius: var(--r-pill); padding: 0.4rem 1rem; cursor: pointer; }
+
+@media (max-width: 760px) {
+  .header__toggle { display: block; }
+  .header__nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--c-bg); border-bottom: 1px solid var(--c-line); padding: 0.5rem var(--gutter) 1.2rem; }
+  .header__nav.is-open { display: flex; }
+  .header__nav a { padding: 0.8rem 0; font-size: 1.2rem; }
+}
