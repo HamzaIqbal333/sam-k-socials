@@ -8,6 +8,7 @@ import Services from "./pages/Services";
 import Portfolio from "./pages/Portfolio";
 import CaseStudy from "./pages/CaseStudy";
 import Contact from "./pages/Contact";
+import Links from "./pages/Links";
 
 // The entire admin panel — including AuthProvider and the firebase/auth SDK it pulls in —
 // is one lazy chunk. A visitor to the public site never downloads any of it.
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/:slug" element={<CaseStudy />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/links" element={<Links />} />
         </Route>
 
         <Route
