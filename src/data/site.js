@@ -10,11 +10,11 @@ export const site = {
   email: "hello@samksocials.com", // TODO: confirm real email
   tallyFormId: "REPLACE_WITH_TALLY_FORM_ID", // TODO: from your Tally share link (tally.so/r/<id>), optional now
   availability: "Booking new partnerships for next month",
-  heroImage: "https://images.unsplash.com/photo-1683170139203-d8a41d680358?w=1000&q=80&auto=format&fit=crop", // TODO: replace with Sam's own content
+  heroImage: "https://images.unsplash.com/photo-1575318633968-0383e7d07ca0?w=1000&q=80&auto=format&fit=crop", // TODO: replace with Sam's own content
   // Same photo on About and Contact on purpose — it's meant to be the same person, Sam, in both places.
   // TODO: replace with two real photos of Sam once you have them (a portrait + a candid work shot read well as a pair).
-  aboutImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&auto=format&fit=crop",
-  contactImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&auto=format&fit=crop",
+  aboutImage: "https://images.unsplash.com/photo-1762341104634-998bbee0ccba?w=900&q=80&auto=format&fit=crop",
+  contactImage: "https://images.unsplash.com/photo-1762341104634-998bbee0ccba?w=900&q=80&auto=format&fit=crop",
   socials: [
     { label: "Instagram", href: "https://instagram.com/" }, // TODO: real handles
     { label: "TikTok", href: "https://tiktok.com/" },
@@ -82,7 +82,7 @@ export const clients = [
     name: "Corner Press Coffee",
     industry: "Independent café, two Sydney locations",
     did: ["Social media management", "Content sessions"],
-    coverImage: "https://images.unsplash.com/photo-1646192040647-2f50e73b59db?w=900&q=80&auto=format&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1709548145082-04d0cde481d4?w=900&q=80&auto=format&fit=crop",
     need: "Corner Press had loyal regulars but their Instagram hadn't posted in six weeks. New locals scrolling past had no reason to walk in — the feed didn't match how good the coffee actually was.",
     approach: "A monthly shoot day covering both locations, a simple content calendar built around opening hours and seasonal menu drops, and captions written in the owners' actual voice instead of generic café copy.",
     show: "Weekly Reels of the morning rush, latte art close-ups, staff picks Stories, and a full feed refresh — plus the seasonal menu launch that kicked it all off.",
@@ -93,7 +93,7 @@ export const clients = [
     name: "Bloom & Bay Skin Studio",
     industry: "Boutique beauty and skin studio",
     did: ["Content strategy", "Content sessions", "Meta & Google Ads"],
-    coverImage: "https://images.unsplash.com/photo-1773000129212-3546d5e083cd?w=900&q=80&auto=format&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1720118509152-2df877673bee?w=900&q=80&auto=format&fit=crop",
     need: "Bookings relied entirely on word of mouth. The studio wanted a steady stream of new-client enquiries without feeling like they were \"selling\" on social.",
     approach: "A content pillar system built around treatment education, before-and-after results (with client consent) and studio atmosphere, paired with a small always-on Meta ads budget aimed at their local area.",
     show: "Treatment-day Reels, a redesigned highlight system for services and pricing, and the ad creative that ran alongside the organic content.",
@@ -104,7 +104,7 @@ export const clients = [
     name: "Everline Studio",
     industry: "Independent fashion boutique",
     did: ["Social media management", "Content strategy"],
-    coverImage: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=900&q=80&auto=format&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1762232976761-267874515994?w=900&q=80&auto=format&fit=crop",
     need: "A beautiful store that didn't translate online — the feed looked like a catalogue, not a place people wanted to shop.",
     approach: "A visual identity built around styling content instead of flat-lay product shots, a restock and drop calendar the team could actually keep up with, and a content pillar for styling advice that built real following.",
     show: "Styling Reels, restock countdown Stories, a redesigned grid, and the first \"get the look\" carousel series.",
@@ -115,7 +115,7 @@ export const clients = [
     name: "Moss & Motion Studio",
     industry: "Boutique fitness and movement studio",
     did: ["Social media management", "Meta & Google Ads"],
-    coverImage: "https://images.unsplash.com/photo-1588286840104-8957b019727f?w=900&q=80&auto=format&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1637430308606-86576d8fef3c?w=900&q=80&auto=format&fit=crop",
     need: "New class formats were launching faster than the socials could keep up, and trial-class bookings had plateaued.",
     approach: "A weekly content rhythm tied to the class timetable, instructor-led Reels to build trust before someone's first class, and targeted ads promoting the trial offer to people nearby who'd never trained there.",
     show: "Instructor intro Reels, real class-floor energy (not staged photoshoots), and the trial-offer ad set that ran for six weeks.",

@@ -1,14 +1,18 @@
-/* BRAND TOKENS: swap these values when the brand kit arrives. Nothing else hardcodes colors or fonts. */
+/* BRAND TOKENS: swap these values when the brand kit arrives. Nothing else hardcodes colors or fonts.
+   Dark editorial direction (v2): a warm near-black, not pure black or neutral gray — chosen to read
+   as considered/editorial rather than the generic "dark SaaS + one neon accent" default. Pink stays
+   the brand's signature accent (used with restraint, not painted everywhere); gold and terracotta
+   round out the palette so it doesn't collapse into a single-accent-on-black cliché. */
 :root {
-  --c-bg: #f6f3ff;
-  --c-surface: #ffffff;
-  --c-ink: #26173b;
-  --c-ink-soft: #5b4d70;
+  --c-bg: #17130f;
+  --c-surface: #221c17;
+  --c-ink: #f3ece1;
+  --c-ink-soft: #b0a08e;
   --c-accent: #ff5c8a;
-  --c-accent-ink: #26173b; /* text on accent */
-  --c-zest: #d7f26b;
-  --c-sky: #a9cbff;
-  --c-line: #dcd3ee;
+  --c-accent-ink: #17130f; /* text on accent */
+  --c-zest: #d4af6a;
+  --c-sky: #c97a52;
+  --c-line: #3a322b;
 
   --f-display: "Bricolage Grotesque", system-ui, sans-serif;
   --f-body: "Figtree", system-ui, sans-serif;
