@@ -78,6 +78,7 @@ export default function AdminEnquiries() {
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Business</TableHead>
+                <TableHead>Social</TableHead>
                 <TableHead>Service</TableHead>
                 <TableHead>Message</TableHead>
                 <TableHead className="text-right">
@@ -96,6 +97,7 @@ export default function AdminEnquiries() {
                     </a>
                   </TableCell>
                   <TableCell>{en.business || "—"}</TableCell>
+                  <TableCell>{en.social || "—"}</TableCell>
                   <TableCell>
                     {en.service ? <Badge variant="sky">{en.service}</Badge> : "—"}
                   </TableCell>

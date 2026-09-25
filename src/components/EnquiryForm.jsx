@@ -23,6 +23,7 @@ export default function EnquiryForm() {
         email: d.get("email").trim(),
         business: d.get("business").trim() || null,
         service: d.get("service") || null,
+        social: d.get("social").trim() || null,
         message: d.get("message").trim(),
         createdAt: serverTimestamp(),
       });
@@ -59,6 +60,11 @@ export default function EnquiryForm() {
       <div className="grid gap-2">
         <Label htmlFor="enq-business">Business name</Label>
         <Input id="enq-business" name="business" maxLength={160} autoComplete="organization" />
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="enq-social">Instagram or website</Label>
+        <Input id="enq-social" name="social" maxLength={200} placeholder="@yourbusiness or yoursite.com" />
       </div>
 
       <div className="grid gap-2">

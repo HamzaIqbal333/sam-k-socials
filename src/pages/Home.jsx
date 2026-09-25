@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import Placeholder from "../components/Placeholder";
 import Testimonials from "../components/Testimonials";
 import Marquee from "../components/Marquee";
@@ -110,6 +110,40 @@ function Hero() {
       </div>
 
       <style>{`@keyframes ping-in { from { opacity: 0; transform: translateY(14px) scale(0.85); } to { opacity: 1; transform: none; } }`}</style>
+    </section>
+  );
+}
+
+const DIAGNOSTIC = [
+  "Get a clear social media strategy instead of guessing what to post",
+  "Capture content that actually looks and sounds like your business",
+  "Run ads that bring in real enquiries, not just likes",
+  "Stop the daily grind of posting, scheduling and replying to DMs",
+  "Build a feed people trust before they've even messaged you",
+];
+
+function Diagnostic() {
+  return (
+    <section className={SECTION_Y} aria-labelledby="diagnostic-title">
+      <div className={cn(CONTAINER, "grid gap-10 min-[860px]:grid-cols-[0.9fr_1.1fr] min-[860px]:items-start")}>
+        <div>
+          <h2 id="diagnostic-title" className="max-w-[16ch]">Do you need to:</h2>
+          <p className="max-w-[42ch] text-xl text-muted-foreground">
+            A quick check for business owners ready to swap sporadic posting for something that
+            actually brings in work.
+          </p>
+        </div>
+        <ul role="list" className="grid gap-4">
+          {DIAGNOSTIC.map((item) => (
+            <li key={item} className="flex items-start gap-3.5 rounded-xl border-2 border-foreground bg-card p-4">
+              <span className="mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-primary text-primary-foreground">
+                <Check className="size-3.5" strokeWidth={3} aria-hidden="true" />
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
@@ -270,6 +304,7 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
+      <Diagnostic />
       <ServicesCarousel />
       <Peek />
       <Why />

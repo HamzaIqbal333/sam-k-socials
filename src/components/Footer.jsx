@@ -43,8 +43,11 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className={cn(CONTAINER, "mt-12 border-t border-white/15 pt-6 text-sm text-[#b9a9d6]")}>
-        © {new Date().getFullYear()} {site.name}
+      <div className={cn(CONTAINER, "mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/15 pt-6 text-sm text-[#b9a9d6]")}>
+        <span>© {new Date().getFullYear()} {site.name}</span>
+        <a href="#top" className={cn(LINK, "inline-flex items-center gap-1.5")}>
+          Back to top <span aria-hidden="true">↑</span>
+        </a>
       </div>
     </footer>
   );

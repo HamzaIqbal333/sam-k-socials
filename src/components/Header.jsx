@@ -14,7 +14,7 @@ export default function Header() {
   const { data: site } = useContent("site", siteDefaults);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-muted bg-background/90 backdrop-blur-md">
+    <header id="top" className="sticky top-0 z-50 border-b border-muted bg-background/90 backdrop-blur-md">
       <div className={cn(CONTAINER, "relative flex min-h-[72px] items-center justify-between")}>
         <Link
           to="/"

@@ -16,7 +16,7 @@ rules_version = '2';
 //      explicit exception for this public marketing site. Only Sam can create/update them
 //      (delete is never allowed — losing one of these docs would break the live site).
 //
-// enquiries/{autoId}    { name, email, business?, service?, message, createdAt }
+// enquiries/{autoId}    { name, email, business?, service?, social?, message, createdAt }
 //   -> Contains a visitor's PII (name, email, message). Visitors may only CREATE their own
 //      enquiry; only Sam (admin) may read, update or delete any enquiry.
 //
@@ -177,11 +177,12 @@ function isValidProcess(d) {
 
 // enquiries/{id} validator — public-facing, so this is the most security-sensitive check here.
 function isValidNewEnquiry(d) {
-  return d.keys().hasOnly(['name', 'email', 'business', 'service', 'message', 'createdAt']) &&
+  return d.keys().hasOnly(['name', 'email', 'business', 'service', 'social', 'message', 'createdAt']) &&
     validStr(d.name, 120) &&
     validStr(d.email, 254) &&
     validOptionalStr(d, 'business', 160) &&
     validOptionalStr(d, 'service', 80) &&
+    validOptionalStr(d, 'social', 200) &&
     validStr(d.message, 4000) &&
     d.createdAt == request.time; // must be set via serverTimestamp(), not client-supplied
 }
