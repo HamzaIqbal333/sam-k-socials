@@ -50,6 +50,9 @@ function Hero() {
             />
             {site.availability}
           </p>
+          <p className="mt-1.5 text-sm text-muted-foreground/70">
+            Trusted by cafés, salons and boutique studios.
+          </p>
         </div>
 
         <div className="relative grid place-items-center py-6 max-[860px]:mx-auto max-[860px]:w-full max-[860px]:max-w-[420px]">
@@ -256,6 +259,24 @@ function Peek() {
   );
 }
 
+function Signature() {
+  return (
+    <section className={cn("bg-foreground text-background", SECTION_Y)} aria-labelledby="signature-title">
+      <div className={cn(CONTAINER, "grid gap-8 min-[860px]:grid-cols-[auto_1fr] min-[860px]:items-center")}>
+        <p aria-hidden="true" className="font-display text-7xl font-extrabold leading-none min-[860px]:text-8xl">
+          48h
+        </p>
+        <h2
+          id="signature-title"
+          className="max-w-[42ch] border-t-2 border-background/15 pt-6 text-2xl font-medium leading-snug min-[860px]:border-t-0 min-[860px]:border-l-2 min-[860px]:pl-8 min-[860px]:pt-0"
+        >
+          Every enquiry gets a reply within two working days — no chasing, no radio silence.
+        </h2>
+      </div>
+    </section>
+  );
+}
+
 function Why() {
   return (
     <section className={cn("bg-card", SECTION_Y)} aria-labelledby="why-title">
@@ -288,7 +309,7 @@ function Closer() {
         <h2 id="cta-title" className="max-w-[16ch] text-[clamp(2.2rem,4.5vw,3.8rem)]">
           Ready to go big on your socials?
         </h2>
-        <p className="mb-7 max-w-[44ch] text-xl text-[#d9cdf0]">
+        <p className="mb-7 max-w-[44ch] text-xl text-background/70">
           Tell me about your business and where you'd like it to go. I'll reply within two working days.
         </p>
         <Button asChild size="lg">
@@ -307,6 +328,7 @@ export default function Home() {
       <Diagnostic />
       <ServicesCarousel />
       <Peek />
+      <Signature />
       <Why />
       <Testimonials />
       <Closer />

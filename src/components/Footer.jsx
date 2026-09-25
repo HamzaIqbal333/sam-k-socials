@@ -18,7 +18,7 @@ export default function Footer() {
             <Logo size={30} className="flex-none" />
             {site.name}
           </p>
-          <p className="max-w-[32ch] text-[#d9cdf0]">
+          <p className="max-w-[32ch] text-background/70">
             Social media, content and ads that bring in the right enquiries.
           </p>
         </div>
@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className={cn(CONTAINER, "mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/15 pt-6 text-sm text-[#b9a9d6]")}>
+      <div className={cn(CONTAINER, "mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-background/15 pt-6 text-sm text-background/60")}>
         <span>© {new Date().getFullYear()} {site.name}</span>
         <a href="#top" className={cn(LINK, "inline-flex items-center gap-1.5")}>
           Back to top <span aria-hidden="true">↑</span>
