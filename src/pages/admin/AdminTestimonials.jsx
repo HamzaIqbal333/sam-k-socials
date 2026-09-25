@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useContent, saveContent } from "../../hooks/useContent";
 import { testimonials } from "../../data/site";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const MAX_TESTIMONIALS = 8;
 
@@ -62,71 +67,79 @@ export default function AdminTestimonials() {
         Edit the quotes shown on the home and services pages. Capped at {MAX_TESTIMONIALS} testimonials.
       </p>
 
-      <form className="admin-form" onSubmit={handleSave}>
+      <form className="grid gap-6 max-w-2xl" onSubmit={handleSave}>
         {items.map((t, i) => (
-          <div className="admin-list-item" key={i}>
-            <label>
-              Quote
-              <textarea
-                rows={3}
-                maxLength={600}
-                value={t.quote}
-                required
-                onChange={(e) => updateTestimonial(i, { quote: e.target.value })}
-              />
-            </label>
+          <Card key={i}>
+            <CardHeader>
+              <h2 className="font-display text-lg font-bold">{t.name || `Testimonial ${i + 1}`}</h2>
+            </CardHeader>
+            <CardContent className="grid gap-5">
+              <div className="grid gap-1.5">
+                <Label htmlFor={`quote-${i}`}>Quote</Label>
+                <Textarea
+                  id={`quote-${i}`}
+                  rows={3}
+                  maxLength={600}
+                  value={t.quote}
+                  required
+                  onChange={(e) => updateTestimonial(i, { quote: e.target.value })}
+                />
+              </div>
 
-            <label>
-              Name
-              <input
-                type="text"
-                value={t.name}
-                maxLength={80}
-                required
-                onChange={(e) => updateTestimonial(i, { name: e.target.value })}
-              />
-            </label>
+              <div className="grid gap-1.5">
+                <Label htmlFor={`name-${i}`}>Name</Label>
+                <Input
+                  id={`name-${i}`}
+                  type="text"
+                  value={t.name}
+                  maxLength={80}
+                  required
+                  onChange={(e) => updateTestimonial(i, { name: e.target.value })}
+                />
+              </div>
 
-            <label>
-              Business
-              <input
-                type="text"
-                value={t.business}
-                maxLength={100}
-                onChange={(e) => updateTestimonial(i, { business: e.target.value })}
-              />
-            </label>
+              <div className="grid gap-1.5">
+                <Label htmlFor={`business-${i}`}>Business</Label>
+                <Input
+                  id={`business-${i}`}
+                  type="text"
+                  value={t.business}
+                  maxLength={100}
+                  onChange={(e) => updateTestimonial(i, { business: e.target.value })}
+                />
+              </div>
 
-            <div className="admin-item-actions">
-              <button type="button" className="btn btn--ghost" onClick={() => removeTestimonial(i)}>
-                Remove this testimonial
-              </button>
-            </div>
-          </div>
+              <div className="flex gap-2 pt-1">
+                <Button type="button" variant="destructive" size="sm" onClick={() => removeTestimonial(i)}>
+                  Remove this testimonial
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ))}
 
-        <div className="admin-item-actions">
-          <button
+        <div className="flex flex-wrap items-center gap-3">
+          <Button
             type="button"
-            className="btn btn--ghost"
+            variant="outline"
             onClick={addTestimonial}
             disabled={items.length >= MAX_TESTIMONIALS}
           >
             + Add testimonial
-          </button>
+          </Button>
           {items.length >= MAX_TESTIMONIALS && (
-            <span className="admin-status">
+            <span className="text-sm text-muted-foreground">
               Testimonials are capped at {MAX_TESTIMONIALS} — remove one to add another.
             </span>
           )}
         </div>
 
         <div>
-          <button type="submit" className="btn btn--primary" disabled={saving}>
+          <Button type="submit" variant="brand" disabled={saving}>
             {saving ? "Saving…" : "Save changes"}
-          </button>
+          </Button>
           {status && (
-            <p className={`admin-status ${status.ok ? "admin-status--ok" : "admin-status--error"}`}>
+            <p className={`text-sm mt-3 ${status.ok ? "text-[#1a7f37]" : "text-destructive"}`}>
               {status.message}
             </p>
           )}

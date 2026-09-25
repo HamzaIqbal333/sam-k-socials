@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useContent, saveContent } from "../../hooks/useContent";
 import { site as siteDefaults } from "../../data/site";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const MAX_SOCIALS = 8;
 
@@ -63,137 +67,151 @@ export default function AdminSite() {
 
   return (
     <div>
-      <h1>Site settings</h1>
-      <p className="lede">Business details shown across the public site.</p>
+      <h1 className="text-3xl font-display font-bold">Site settings</h1>
+      <p className="mt-1 text-muted-foreground">Business details shown across the public site.</p>
 
-      <form className="admin-form" onSubmit={onSubmit}>
-        <label>
-          Business name
-          <input
+      <form className="mt-6 grid max-w-2xl gap-6" onSubmit={onSubmit}>
+        <div className="grid gap-2">
+          <Label htmlFor="site-name">Business name</Label>
+          <Input
+            id="site-name"
             value={form?.name || ""}
             onChange={(e) => update("name", e.target.value)}
             maxLength={80}
             required
           />
-        </label>
+        </div>
 
-        <label>
-          Email
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="site-email">Email</Label>
+          <Input
+            id="site-email"
             type="email"
             value={form?.email || ""}
             onChange={(e) => update("email", e.target.value)}
             maxLength={254}
             required
           />
-        </label>
+        </div>
 
-        <label>
-          Availability
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="site-availability">Availability</Label>
+          <Input
+            id="site-availability"
             value={form?.availability || ""}
             onChange={(e) => update("availability", e.target.value)}
             maxLength={160}
             placeholder="e.g. Booking new partnerships for next month"
           />
-        </label>
+        </div>
 
-        <label>
-          Tally form ID
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="site-tally">Tally form ID</Label>
+          <Input
+            id="site-tally"
             value={form?.tallyFormId || ""}
             onChange={(e) => update("tallyFormId", e.target.value)}
             maxLength={120}
             placeholder="tally.so/r/<id>"
           />
-        </label>
-        <p className="admin-status">
-          Optional and now legacy — the Contact page uses its own Firestore-backed enquiry form.
-          This is only used as a fallback embed if that isn't available.
-        </p>
+          <p className="text-sm text-muted-foreground">
+            Optional and now legacy — the Contact page uses its own Firestore-backed enquiry form.
+            This is only used as a fallback embed if that isn't available.
+          </p>
+        </div>
 
-        <label>
-          Hero image URL (Home page, phone screen)
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="site-hero-image">Hero image URL (Home page, phone screen)</Label>
+          <Input
+            id="site-hero-image"
             type="url"
             value={form?.heroImage || ""}
             onChange={(e) => update("heroImage", e.target.value)}
             maxLength={500}
             placeholder="https://..."
           />
-        </label>
-        <label>
-          About page photo URL
-          <input
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="site-about-image">About page photo URL</Label>
+          <Input
+            id="site-about-image"
             type="url"
             value={form?.aboutImage || ""}
             onChange={(e) => update("aboutImage", e.target.value)}
             maxLength={500}
             placeholder="https://..."
           />
-        </label>
-        <label>
-          Contact page photo URL
-          <input
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="site-contact-image">Contact page photo URL</Label>
+          <Input
+            id="site-contact-image"
             type="url"
             value={form?.contactImage || ""}
             onChange={(e) => update("contactImage", e.target.value)}
             maxLength={500}
             placeholder="https://..."
           />
-        </label>
-        <p className="admin-status">
-          Paste a direct image link (ending in .jpg/.png, or an Unsplash/CDN URL). Leave blank to
-          show a plain placeholder block instead.
-        </p>
+          <p className="text-sm text-muted-foreground">
+            Paste a direct image link (ending in .jpg/.png, or an Unsplash/CDN URL). Leave blank to
+            show a plain placeholder block instead.
+          </p>
+        </div>
 
-        <div>
-          <label>Social links</label>
+        <div className="grid gap-3">
+          <Label>Social links</Label>
           {socials.map((s, i) => (
-            <div className="admin-list-item" key={i}>
-              <label>
-                Label
-                <input
-                  value={s.label || ""}
-                  onChange={(e) => updateSocial(i, "label", e.target.value)}
-                  maxLength={40}
-                  placeholder="Instagram"
-                />
-              </label>
-              <label>
-                URL
-                <input
-                  value={s.href || ""}
-                  onChange={(e) => updateSocial(i, "href", e.target.value)}
-                  maxLength={300}
-                  placeholder="https://instagram.com/yourhandle"
-                />
-              </label>
-              <div className="admin-item-actions">
-                <button type="button" className="btn btn--ghost" onClick={() => removeSocial(i)}>
-                  Remove
-                </button>
-              </div>
-            </div>
+            <Card key={i}>
+              <CardContent className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor={`social-label-${i}`}>Label</Label>
+                  <Input
+                    id={`social-label-${i}`}
+                    value={s.label || ""}
+                    onChange={(e) => updateSocial(i, "label", e.target.value)}
+                    maxLength={40}
+                    placeholder="Instagram"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor={`social-href-${i}`}>URL</Label>
+                  <Input
+                    id={`social-href-${i}`}
+                    value={s.href || ""}
+                    onChange={(e) => updateSocial(i, "href", e.target.value)}
+                    maxLength={300}
+                    placeholder="https://instagram.com/yourhandle"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button type="button" variant="outline" size="sm" onClick={() => removeSocial(i)}>
+                    Remove
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           ))}
-          <div className="admin-item-actions">
-            <button
+          <div>
+            <Button
               type="button"
-              className="btn btn--ghost"
+              variant="outline"
+              size="sm"
               onClick={addSocial}
               disabled={socials.length >= MAX_SOCIALS}
             >
               Add social link
-            </button>
+            </Button>
           </div>
         </div>
 
-        <button className="btn btn--primary" type="submit" disabled={status === "saving"}>
-          {status === "saving" ? "Saving…" : "Save changes"}
-        </button>
+        <div>
+          <Button type="submit" disabled={status === "saving"}>
+            {status === "saving" ? "Saving…" : "Save changes"}
+          </Button>
 
-        {status === "ok" && <p className="admin-status admin-status--ok">Saved.</p>}
-        {status === "error" && <p className="admin-status admin-status--error">{error}</p>}
+          {status === "ok" && <p className="mt-2 text-sm text-emerald-700">Saved.</p>}
+          {status === "error" && <p className="mt-2 text-sm text-destructive">{error}</p>}
+        </div>
       </form>
     </div>
   );

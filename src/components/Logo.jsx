@@ -10,7 +10,7 @@ export default function Logo({ size = 34, className = "" }) {
       aria-hidden="true"
       focusable="false"
     >
-      <rect width="64" height="64" rx="16" fill="var(--c-accent)" />
+      <rect width="64" height="64" rx="16" fill="var(--color-primary)" />
       <text
         x="32"
         y="34"
@@ -20,7 +20,7 @@ export default function Logo({ size = 34, className = "" }) {
         fontWeight="800"
         fontSize="22"
         letterSpacing="-0.5"
-        fill="var(--c-ink)"
+        fill="var(--color-foreground)"
       >
         SKS
       </text>

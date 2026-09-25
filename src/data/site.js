@@ -93,7 +93,7 @@ export const clients = [
     name: "Bloom & Bay Skin Studio",
     industry: "Boutique beauty and skin studio",
     did: ["Content strategy", "Content sessions", "Meta & Google Ads"],
-    coverImage: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=900&q=80&auto=format&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1773000129212-3546d5e083cd?w=900&q=80&auto=format&fit=crop",
     need: "Bookings relied entirely on word of mouth. The studio wanted a steady stream of new-client enquiries without feeling like they were \"selling\" on social.",
     approach: "A content pillar system built around treatment education, before-and-after results (with client consent) and studio atmosphere, paired with a small always-on Meta ads budget aimed at their local area.",
     show: "Treatment-day Reels, a redesigned highlight system for services and pricing, and the ad creative that ran alongside the organic content.",

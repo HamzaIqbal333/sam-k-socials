@@ -1,0 +1,88 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ===================================================================
+   Sam K. Socials — Tailwind v4 + shadcn/ui theme, mapped to OUR brand
+   palette (see tokens.css for the raw values). This is deliberate:
+   shadcn's own default (neutral grays, 1px hairline borders) is exactly
+   the generic "SaaS card kit" look this project has been avoiding —
+   every variable below points at a brand color, not a shadcn default.
+   =================================================================== */
+
+@theme inline {
+  --font-sans: var(--f-body);
+  --font-display: var(--f-display);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand-specific extras (beyond the shadcn baseline) stay available as utilities too */
+  --color-zest: var(--c-zest);
+  --color-sky: var(--c-sky);
+
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+:root {
+  --background: var(--c-bg);
+  --foreground: var(--c-ink);
+
+  --card: var(--c-surface);
+  --card-foreground: var(--c-ink);
+  --popover: var(--c-surface);
+  --popover-foreground: var(--c-ink);
+
+  /* Primary = the site's main CTA color (pink), not shadcn's default near-black */
+  --primary: var(--c-accent);
+  --primary-foreground: var(--c-ink);
+
+  --secondary: var(--c-zest);
+  --secondary-foreground: var(--c-ink);
+
+  --muted: var(--c-line);
+  --muted-foreground: var(--c-ink-soft);
+
+  --accent: var(--c-sky);
+  --accent-foreground: var(--c-ink);
+
+  --destructive: #b00020;
+  --destructive-foreground: #fff;
+
+  /* Bold 2px ink borders are a deliberate brand signature (not a subtle grey hairline) —
+     components should generally pair this with Tailwind's `border-2` utility. */
+  --border: var(--c-ink);
+  --input: var(--c-ink);
+  --ring: var(--c-accent);
+
+  --radius: 14px;
+}
+
+@theme {
+  --font-sans: var(--f-body);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--f-body);
+}

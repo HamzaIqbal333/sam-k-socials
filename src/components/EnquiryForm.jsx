@@ -2,7 +2,11 @@ import { useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, firebaseEnabled } from "../lib/firebase";
 import { services } from "../data/site";
-import "./EnquiryForm.css";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 export default function EnquiryForm() {
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
@@ -33,31 +37,63 @@ export default function EnquiryForm() {
 
   if (status === "sent") {
     return (
-      <div className="enq__done" role="status">
-        <h2>Enquiry sent</h2>
-        <p>Thanks for getting in touch. I'll reply within 2 working days.</p>
+      <div role="status" className="rounded-lg border-2 border-foreground bg-secondary p-6 md:p-8">
+        <h2 className="text-[1.35rem]">Enquiry sent</h2>
+        <p className="mb-0 text-foreground">Thanks for getting in touch. I'll reply within 2 working days.</p>
       </div>
     );
   }
 
   return (
-    <form className="enq" onSubmit={onSubmit}>
-      <label>Your name<input name="name" required maxLength={120} autoComplete="name" /></label>
-      <label>Email<input name="email" type="email" required maxLength={254} autoComplete="email" /></label>
-      <label>Business name<input name="business" maxLength={160} autoComplete="organization" /></label>
-      <label>What do you need help with?
-        <select name="service" defaultValue="">
-          <option value="">Not sure yet</option>
-          {services.map((s) => <option key={s.id} value={s.title}>{s.title}</option>)}
-        </select>
-      </label>
-      <label>Tell me about your goals<textarea name="message" required rows={5} maxLength={4000} /></label>
-      <input className="enq__trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-      <button className="btn btn--primary" disabled={status === "sending"}>
+    <form onSubmit={onSubmit} className="grid gap-5">
+      <div className="grid gap-2">
+        <Label htmlFor="enq-name">Your name</Label>
+        <Input id="enq-name" name="name" required maxLength={120} autoComplete="name" />
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="enq-email">Email</Label>
+        <Input id="enq-email" name="email" type="email" required maxLength={254} autoComplete="email" />
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="enq-business">Business name</Label>
+        <Input id="enq-business" name="business" maxLength={160} autoComplete="organization" />
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="enq-service">What do you need help with?</Label>
+        <Select name="service">
+          <SelectTrigger id="enq-service">
+            <SelectValue placeholder="Not sure yet" />
+          </SelectTrigger>
+          <SelectContent>
+            {services.map((s) => (
+              <SelectItem key={s.id} value={s.title}>{s.title}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="enq-message">Tell me about your goals</Label>
+        <Textarea id="enq-message" name="message" required rows={5} maxLength={4000} />
+      </div>
+
+      <input
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px]"
+      />
+
+      <Button type="submit" variant="brand" disabled={status === "sending"} className="justify-self-start">
         {status === "sending" ? "Sending…" : "Send enquiry"}
-      </button>
+      </Button>
+
       {status === "error" && (
-        <p className="enq__error" role="alert">
+        <p role="alert" className="mb-0 text-destructive">
           The enquiry didn't send. Check your connection and try again, or email me directly.
         </p>
       )}

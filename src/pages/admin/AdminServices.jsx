@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useContent, saveContent } from "../../hooks/useContent";
 import { services } from "../../data/site";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 const MAX_SERVICES = 8;
 const MAX_POINTS = 8;
@@ -33,8 +38,8 @@ export default function AdminServices() {
   if (items === null) {
     return (
       <div>
-        <h1>Services</h1>
-        <p className="lede">Loading…</p>
+        <h1 className="text-3xl font-display font-bold">Services</h1>
+        <p className="mt-1 text-muted-foreground">Loading…</p>
       </div>
     );
   }
@@ -112,110 +117,122 @@ export default function AdminServices() {
 
   return (
     <div>
-      <h1>Services</h1>
-      <p className="lede">
+      <h1 className="text-3xl font-display font-bold">Services</h1>
+      <p className="mt-1 text-muted-foreground">
         Edit the services shown in the Home carousel and the Services page cards. Up to {MAX_SERVICES} services.
       </p>
-      <form className="admin-form" onSubmit={handleSave}>
+      <form className="mt-6 grid max-w-2xl gap-6" onSubmit={handleSave}>
         {items.map((service, index) => (
-          <div className="admin-list-item" key={index}>
-            <label>
-              Title
-              <input
-                type="text"
-                value={service.title}
-                maxLength={80}
-                required
-                onChange={(e) => handleTitleChange(index, e.target.value)}
-              />
-            </label>
-            <label>
-              Id (slug used for links)
-              <input
-                type="text"
-                value={service.id}
-                maxLength={60}
-                placeholder="auto-generated from title"
-                onChange={(e) => updateItem(index, { id: e.target.value })}
-              />
-            </label>
-            <label>
-              Kind
-              <input
-                type="text"
-                value={service.kind}
-                maxLength={60}
-                placeholder="e.g. Ongoing, done-for-you"
-                onChange={(e) => updateItem(index, { kind: e.target.value })}
-              />
-            </label>
-            <label>
-              Short summary
-              <input
-                type="text"
-                value={service.short}
-                maxLength={160}
-                onChange={(e) => updateItem(index, { short: e.target.value })}
-              />
-            </label>
-            <label>
-              Body
-              <textarea
-                rows={4}
-                value={service.body}
-                maxLength={800}
-                required
-                onChange={(e) => updateItem(index, { body: e.target.value })}
-              />
-            </label>
-            <label>Points</label>
-            {service.points.map((point, pointIndex) => (
-              <div className="admin-item-actions" key={pointIndex}>
-                <input
+          <Card key={index}>
+            <CardContent className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor={`service-title-${index}`}>Title</Label>
+                <Input
+                  id={`service-title-${index}`}
                   type="text"
-                  value={point}
-                  maxLength={160}
-                  placeholder={`Point ${pointIndex + 1}`}
-                  onChange={(e) => updatePoint(index, pointIndex, e.target.value)}
+                  value={service.title}
+                  maxLength={80}
+                  required
+                  onChange={(e) => handleTitleChange(index, e.target.value)}
                 />
-                <button type="button" className="btn btn--ghost" onClick={() => removePoint(index, pointIndex)}>
-                  Remove point
-                </button>
               </div>
-            ))}
-            <div className="admin-item-actions">
-              <button
-                type="button"
-                className="btn btn--ghost"
-                onClick={() => addPoint(index)}
-                disabled={service.points.length >= MAX_POINTS}
-              >
-                Add point
-              </button>
-              <button type="button" className="btn btn--ghost" onClick={() => removeService(index)}>
-                Remove service
-              </button>
-            </div>
-          </div>
+              <div className="grid gap-2">
+                <Label htmlFor={`service-id-${index}`}>Id (slug used for links)</Label>
+                <Input
+                  id={`service-id-${index}`}
+                  type="text"
+                  value={service.id}
+                  maxLength={60}
+                  placeholder="auto-generated from title"
+                  onChange={(e) => updateItem(index, { id: e.target.value })}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor={`service-kind-${index}`}>Kind</Label>
+                <Input
+                  id={`service-kind-${index}`}
+                  type="text"
+                  value={service.kind}
+                  maxLength={60}
+                  placeholder="e.g. Ongoing, done-for-you"
+                  onChange={(e) => updateItem(index, { kind: e.target.value })}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor={`service-short-${index}`}>Short summary</Label>
+                <Input
+                  id={`service-short-${index}`}
+                  type="text"
+                  value={service.short}
+                  maxLength={160}
+                  onChange={(e) => updateItem(index, { short: e.target.value })}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor={`service-body-${index}`}>Body</Label>
+                <Textarea
+                  id={`service-body-${index}`}
+                  rows={4}
+                  value={service.body}
+                  maxLength={800}
+                  required
+                  onChange={(e) => updateItem(index, { body: e.target.value })}
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <Label>Points</Label>
+                {service.points.map((point, pointIndex) => (
+                  <div className="flex gap-2" key={pointIndex}>
+                    <Input
+                      type="text"
+                      value={point}
+                      maxLength={160}
+                      placeholder={`Point ${pointIndex + 1}`}
+                      onChange={(e) => updatePoint(index, pointIndex, e.target.value)}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removePoint(index, pointIndex)}
+                    >
+                      Remove point
+                    </Button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => addPoint(index)}
+                  disabled={service.points.length >= MAX_POINTS}
+                >
+                  Add point
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={() => removeService(index)}>
+                  Remove service
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ))}
 
-        <div className="admin-item-actions">
-          <button
-            type="button"
-            className="btn btn--ghost"
-            onClick={addService}
-            disabled={items.length >= MAX_SERVICES}
-          >
+        <div className="flex items-center gap-3">
+          <Button type="button" variant="outline" onClick={addService} disabled={items.length >= MAX_SERVICES}>
             Add service
-          </button>
-          <button type="submit" className="btn btn--primary" disabled={status.state === "saving"}>
+          </Button>
+          <Button type="submit" disabled={status.state === "saving"}>
             {status.state === "saving" ? "Saving…" : "Save"}
-          </button>
+          </Button>
         </div>
 
-        {status.state === "ok" && <p className="admin-status admin-status--ok">Saved</p>}
+        {status.state === "ok" && <p className="text-sm text-emerald-700">Saved</p>}
         {status.state === "error" && (
-          <p className="admin-status admin-status--error">
+          <p className="text-sm text-destructive">
             Couldn't save{status.message ? `: ${status.message}` : "."}
           </p>
         )}

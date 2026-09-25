@@ -1,5 +1,0 @@
-.testi__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.testi__card { margin: 0; padding: 2rem; background: var(--c-surface); border: 2px solid var(--c-ink); border-radius: var(--r-md); }
-.testi__card:nth-child(2) { background: var(--c-zest); }
-.testi__card blockquote { margin: 0 0 1.2rem; font: 500 1.2rem/1.45 var(--f-display); }
-.testi__card figcaption { font-size: var(--fs-small); }
